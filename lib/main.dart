@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:edu_flutter/videoswidget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -29,6 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String title = "Astronomy picture";
   String imageUrl = '';
+  String videoURL = '';
   bool isLoading = false;
   DateTime firstDate = DateTime(1995, 06, 16);
   DateTime currentDate = DateTime.now();
@@ -41,6 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    return VideoWidget();
+
+
     Widget body;
 
     if (isLoading) {
@@ -115,7 +121,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
         setState(() {
           title = map['title'];
-          imageUrl = map["hdurl"];
+
+          String type = map["media_type"];
+          if (type == "image") {
+            imageUrl = map["url"];
+          } else {
+            videoURL = map["url"];
+          }
+
           isLoading = false;
         });
       }
