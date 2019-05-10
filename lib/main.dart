@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:edu_flutter/videoswidget.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
@@ -12,10 +13,10 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return new MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.purple,
       ),
       home: MyHomePage(),
     );
@@ -43,15 +44,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    return VideoWidget();
-
-
     Widget body;
 
     if (isLoading) {
       body = Center(child: CircularProgressIndicator());
-    } else {
+    } else if (videoURL != null) {
+      // video
+      print(videoURL);
+
+      body = VideoWidget(videoURL);
+    } else if (imageUrl != null) {
+      print(imageUrl);
+
+      // image
       body = Stack(
         children: <Widget>[
           Image.network(
@@ -72,10 +77,17 @@ class _MyHomePageState extends State<MyHomePage> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: Text(title)),
+      appBar: AppBar(
+          title: Text(
+        title,
+        style: TextStyle(color: Color(0xFF7C332D), letterSpacing: 5.5),
+      )),
       body: body,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(
+          Icons.event,
+          color: Colors.deepOrangeAccent,
+        ),
         tooltip: 'Increment',
         onPressed: onFABClick,
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -84,6 +96,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onFABClick() {
     //
+
     Future<DateTime> future = showDatePicker(
         context: context,
         initialDate: currentDate,
@@ -111,32 +124,33 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Future<http.Response> future = http.get(
         "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=$dateStr");
-    future.then((http.Response response) {
-      // Parsing response
-      if (response.statusCode == 200) {
-        // ok
+    future.then(onResponseReceived);
+  }
 
-        Map<String, dynamic> map = json.decode(response.body);
-        String date = map["explanation"];
+  void onResponseReceived(http.Response response) {
+    // Parsing response
+    if (response.statusCode == 200) {
+      // ok
 
-        setState(() {
-          title = map['title'];
+      Map<String, dynamic> map = json.decode(response.body);
+      String date = map["explanation"];
 
-          String type = map["media_type"];
-          if (type == "image") {
-            imageUrl = map["url"];
-          } else {
-            videoURL = map["url"];
-          }
+      setState(() {
+        title = map['title'];
 
-          isLoading = false;
-        });
-      }
-    });
+        String type = map["media_type"];
+        if (type == "image") {
+          imageUrl = map["url"];
+          videoURL = null;
+        } else {
+          videoURL = map["url"];
+          print(videoURL);
+          imageUrl = null;
+        }
 
-    // asdasdsa
-    //
-    print("ASdasdas");
+        isLoading = false;
+      });
+    }
   }
 }
 
