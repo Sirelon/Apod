@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:url_launcher/url_launcher.dart' as launcher;
 
 void main() => runApp(MyApp());
 
@@ -52,7 +53,43 @@ class _MyHomePageState extends State<MyHomePage> {
       // video
       print(videoURL);
 
-      body = VideoWidget(videoURL);
+      Widget bg = OrientationBuilder(
+          builder: (BuildContext context, Orientation orientation) {
+        String img;
+        if (orientation == Orientation.portrait) {
+          img = "images/walle_portrait.jpg";
+        } else {
+          img = "images/волли.jpg";
+        }
+
+        return Image.asset(
+          img,
+          width: double.infinity,
+          height: double.infinity,
+          fit: BoxFit.cover,
+        );
+      });
+
+      body = Stack(
+        children: <Widget>[
+          bg,
+          Center(
+            child: OutlineButton(
+              onPressed: () {
+                launcher.launch(videoURL);
+              },
+              child: Text(
+                "Play Video",
+                style: TextStyle(fontSize: 36.0),
+              ),
+              splashColor: Colors.white70,
+              textColor: Color(0xFFB26C88),
+            ),
+          )
+        ],
+      );
+
+//      body = VideoWidget(videoURL);
     } else if (imageUrl != null) {
       print(imageUrl);
 
@@ -78,15 +115,13 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-        title,
-        style: TextStyle(color: Color(0xFF7C332D), letterSpacing: 5.5),
-      )),
+          title: Text(title,
+              style: TextStyle(color: Colors.limeAccent, letterSpacing: 1.2))),
       body: body,
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.event,
-          color: Colors.deepOrangeAccent,
+          color: Colors.limeAccent,
         ),
         tooltip: 'Increment',
         onPressed: onFABClick,

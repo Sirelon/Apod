@@ -145,7 +145,6 @@
 				0FC2AAC5E0AAA7E9ECE681DF /* Pods-Runner.release.xcconfig */,
 				D00E7575E14EF2350CA50472 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -193,6 +192,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
