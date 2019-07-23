@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:edu_flutter/videoswidget.dart';
+import 'package:stellar_story/videoswidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
 import 'package:http/http.dart' as http;
@@ -115,10 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        actions: <Widget>[
-          IconButton(icon: Icon(Icons.scatter_plot),
-          onPressed: onInfoClick,)
-        ],
+//        actions: <Widget>[
+//          IconButton(icon: Icon(Icons.scatter_plot),
+//          onPressed: onInfoClick,)
+//        ],
           title: Text(title,
               style: TextStyle(color: Colors.limeAccent, letterSpacing: 1.2))),
       body: body,

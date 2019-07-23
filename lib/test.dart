@@ -1,4 +1,4 @@
-import 'package:edu_flutter/main.dart';
+import 'package:stellar_story/main.dart';
 
 class Test{
   void asda(){
