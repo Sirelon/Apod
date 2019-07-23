@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'APOD',
+      title: 'Stellar story',
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String title = "Astronomy picture";
+  String title = "Stellar story";
   String imageUrl = '';
   String videoURL = '';
   bool isLoading = false;
@@ -127,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
           Icons.event,
           color: Colors.limeAccent,
         ),
-        tooltip: 'Increment',
+        tooltip: 'Choose Date',
         onPressed: onFABClick,
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
