@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'Flutter Demo',
+      title: 'APOD',
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 36.0),
               ),
               splashColor: Colors.white70,
-              textColor: Color(0xFFB26C88),
+              textColor: Color(0xFFFFE500),
             ),
           )
         ],
@@ -115,6 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.scatter_plot),
+          onPressed: onInfoClick,)
+        ],
           title: Text(title,
               style: TextStyle(color: Colors.limeAccent, letterSpacing: 1.2))),
       body: body,
@@ -129,9 +133,12 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void onInfoClick(){
+
+  }
+
   void onFABClick() {
     //
-
     Future<DateTime> future = showDatePicker(
         context: context,
         initialDate: currentDate,
@@ -139,6 +146,7 @@ class _MyHomePageState extends State<MyHomePage> {
         lastDate: DateTime.now());
 
     future.then((DateTime value) {
+
       if (value != null) {
         currentDate = value;
         fetchData();
@@ -159,6 +167,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     Future<http.Response> future = http.get(
         "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=$dateStr");
+
     future.then(onResponseReceived);
   }
 
