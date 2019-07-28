@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String title = "Stellar story";
   String imageUrl = '';
   String videoURL = '';
+  String info = '';
   bool isLoading = false;
   DateTime firstDate = DateTime(1995, 06, 16);
   DateTime currentDate = DateTime.now();
@@ -115,10 +116,12 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Scaffold(
       appBar: AppBar(
-//        actions: <Widget>[
-//          IconButton(icon: Icon(Icons.scatter_plot),
-//          onPressed: onInfoClick,)
-//        ],
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.info),
+              onPressed: onInfoClick,
+            )
+          ],
           title: Text(title,
               style: TextStyle(color: Colors.limeAccent, letterSpacing: 1.2))),
       body: body,
@@ -133,8 +136,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void onInfoClick(){
-
+  void onInfoClick() {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title, style: TextStyle(color: Color(0xE93C2323))),
+            backgroundColor: Color(0xFFDA9EFF),
+            content: Text(info),
+          );
+        });
   }
 
   void onFABClick() {
@@ -146,7 +157,6 @@ class _MyHomePageState extends State<MyHomePage> {
         lastDate: DateTime.now());
 
     future.then((DateTime value) {
-
       if (value != null) {
         currentDate = value;
         fetchData();
@@ -177,10 +187,10 @@ class _MyHomePageState extends State<MyHomePage> {
       // ok
 
       Map<String, dynamic> map = json.decode(response.body);
-      String date = map["explanation"];
 
       setState(() {
         title = map['title'];
+        info = map['explanation'];
 
         String type = map["media_type"];
         if (type == "image") {
