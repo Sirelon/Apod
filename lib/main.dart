@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
+import 'package:stellar_story/About.dart';
 import 'package:stellar_story/videoswidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' as cupertino;
@@ -137,15 +138,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void onInfoClick() {
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text(title, style: TextStyle(color: Color(0xE93C2323))),
-            backgroundColor: Color(0xFFDA9EFF),
-            content: Text(info),
-          );
-        });
+    Navigator.push(context, MaterialPageRoute(builder: (c) => AboutPage()));
+//    showDialog(
+//        context: context,
+//        builder: (BuildContext context) {
+//          return AlertDialog(
+//            title: Text(title, style: TextStyle(color: Color(0xE93C2323))),
+//            backgroundColor: Color(0xFFDA9EFF),
+//            content: Text(info),
+//          );
+//        });
   }
 
   void onFABClick() {
